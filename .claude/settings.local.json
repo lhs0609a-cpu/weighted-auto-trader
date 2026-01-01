@@ -3,7 +3,14 @@
     "allow": [
       "Bash(cat:*)",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial commit: WeightedAutoTrader 자동매매 시스템\n\n- Backend: FastAPI 기반 API 서버\n  - Trading Engine: 포지션/주문 관리, 자동매매\n  - Analysis: 시장/종목 분석, 지표 계산\n  - WebSocket: 실시간 시세/신호 스트리밍\n  - Database: SQLAlchemy 비동기 리포지토리\n\n- Frontend: Next.js 대시보드\n  - 실시간 종목 시세\n  - 매매 신호 알림\n  - 포지션 관리\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(gh auth status:*)",
+      "Bash(gh repo create:*)",
+      "Bash(where:*)",
+      "Bash(vercel:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }
