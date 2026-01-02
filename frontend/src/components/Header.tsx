@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -390,7 +390,7 @@ export default function Header({
 }
 
 function StyleIcon({ type }: { type: string }) {
-  const icons: Record<string, JSX.Element> = {
+  const icons: Record<string, React.ReactNode> = {
     bolt: (
       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
         <path
@@ -429,7 +429,7 @@ function StyleIcon({ type }: { type: string }) {
 }
 
 function NavIcon({ type }: { type: string }) {
-  const icons: Record<string, JSX.Element> = {
+  const icons: Record<string, React.ReactNode> = {
     grid: (
       <svg
         className="w-5 h-5"
