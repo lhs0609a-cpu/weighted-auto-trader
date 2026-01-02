@@ -81,7 +81,6 @@ export default function Dashboard() {
       }
     } catch (error) {
       console.error("Failed to load stocks:", error);
-      // Mock data for demo
       setStocks([
         {
           stock_code: "005930",
@@ -184,7 +183,6 @@ export default function Dashboard() {
       }
     } catch (error) {
       console.error("Failed to load positions:", error);
-      // Mock data
       setPositions([
         {
           position_id: "1",
@@ -228,7 +226,6 @@ export default function Dashboard() {
       }
     } catch (error) {
       console.error("Failed to load signals:", error);
-      // Fallback demo signals
       setSignals([
         {
           stock_code: "005930",
@@ -267,22 +264,18 @@ export default function Dashboard() {
     init();
   }, []);
 
-  // Reload signals when trading style changes
   useEffect(() => {
     if (!loading) {
       loadSignals();
     }
   }, [tradingStyle]);
 
-  // Handle stock selection
   const handleStockSelect = (stock: Quote) => {
     setSelectedStock(stock);
-    // Find matching signal for this stock
     const matchingSignal = signals.find(s => s.stock_code === stock.stock_code);
     setSelectedSignal(matchingSignal?.signal);
   };
 
-  // Handle order submission
   const handleOrderSubmit = async (side: "BUY" | "SELL", order: OrderRequest) => {
     try {
       const response = side === "BUY"
@@ -291,11 +284,8 @@ export default function Dashboard() {
 
       if (response.status === "FILLED" || response.status === "SUBMITTED") {
         setOrderSuccess(`${side === "BUY" ? "매수" : "매도"} 주문이 ${response.status === "FILLED" ? "체결" : "접수"}되었습니다`);
-        // Reload positions and balance
         loadPositions();
         loadBalance();
-
-        // Clear success message after 3 seconds
         setTimeout(() => setOrderSuccess(null), 3000);
       } else {
         throw new Error(response.message || "주문 처리 실패");
@@ -310,29 +300,32 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen gradient-mesh flex items-center justify-center">
+      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
         <div className="text-center">
-          <div className="relative">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 animate-pulse" />
-            <div className="absolute inset-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 animate-ping opacity-20" />
+          <div className="relative w-16 h-16 mx-auto">
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#833AB4] via-[#E1306C] to-[#F77737] animate-spin" style={{ animationDuration: '3s' }} />
+            <div className="absolute inset-1 rounded-xl bg-zinc-50 dark:bg-zinc-950" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-2xl">📈</span>
+            </div>
           </div>
-          <p className="mt-6 text-[var(--muted)] font-medium">로딩중...</p>
+          <p className="mt-6 text-zinc-400 font-medium">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen gradient-mesh">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <Header
         isConnected={isConnected}
         tradingStyle={tradingStyle}
         onStyleChange={setTradingStyle}
       />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <main className="max-w-7xl mx-auto px-4 py-6">
+        {/* Stats - Instagram Story Style */}
+        <div className="flex gap-4 mb-8 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
           <StatCard
             title="총 자산"
             value={`${(balance.total_asset / 10000).toFixed(0)}만`}
@@ -366,19 +359,19 @@ export default function Dashboard() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left - Stock List */}
+          {/* Left - Stock Feed */}
           <div className="lg:col-span-2">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-xl font-bold text-[var(--foreground)]">
+                <h2 className="text-xl font-bold text-zinc-900 dark:text-white">
                   관심 종목
                 </h2>
-                <p className="text-sm text-[var(--muted)]">
-                  실시간 시세를 확인하세요
+                <p className="text-sm text-zinc-400">
+                  실시간 시세
                 </p>
               </div>
-              <button className="px-4 py-2 rounded-xl text-sm font-medium text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-colors">
-                전체보기 →
+              <button className="px-4 py-2 rounded-full text-sm font-semibold text-[#E1306C] hover:bg-pink-50 dark:hover:bg-pink-500/10 transition-colors">
+                전체보기
               </button>
             </div>
 
@@ -388,7 +381,11 @@ export default function Dashboard() {
                 return (
                   <div
                     key={stock.stock_code}
-                    className={`animate-slide-up ${selectedStock?.stock_code === stock.stock_code ? 'ring-2 ring-violet-500 rounded-2xl' : ''}`}
+                    className={`transform transition-all duration-300 ${
+                      selectedStock?.stock_code === stock.stock_code
+                        ? 'scale-[1.02] ring-2 ring-[#E1306C] ring-offset-2 ring-offset-zinc-50 dark:ring-offset-zinc-950 rounded-3xl'
+                        : ''
+                    }`}
                     style={{ animationDelay: `${idx * 50}ms` }}
                   >
                     <StockCard
@@ -403,9 +400,9 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Right - Auto Trader, Trade Panel, Signals & Positions */}
+          {/* Right Sidebar */}
           <div className="space-y-6">
-            {/* Auto Trader Panel */}
+            {/* Auto Trader */}
             <AutoTraderPanel />
 
             {/* Trade Panel */}
@@ -415,27 +412,31 @@ export default function Dashboard() {
               score={signals.find(s => s.stock_code === selectedStock?.stock_code)?.score}
               onOrderSubmit={handleOrderSubmit}
             />
+
             {/* Signals */}
-            <div>
+            <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 p-5">
               <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h2 className="text-xl font-bold text-[var(--foreground)]">
-                    매매 신호
-                  </h2>
-                  <p className="text-sm text-[var(--muted)]">
-                    AI 분석 결과
-                  </p>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#833AB4] via-[#E1306C] to-[#F77737] flex items-center justify-center">
+                    <span className="text-white text-sm">🎯</span>
+                  </div>
+                  <div>
+                    <h2 className="font-bold text-zinc-900 dark:text-white">
+                      매매 신호
+                    </h2>
+                    <p className="text-xs text-zinc-400">AI 분석</p>
+                  </div>
                 </div>
                 {signals.length > 0 && (
-                  <span className="px-2 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-500">
-                    {signals.length}개
+                  <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-[#E1306C]/10 text-[#E1306C]">
+                    {signals.length}
                   </span>
                 )}
               </div>
 
               {signals.length > 0 ? (
-                <div className="space-y-0">
-                  {signals.map((signal, idx) => (
+                <div className="space-y-3">
+                  {signals.slice(0, 5).map((signal, idx) => (
                     <SignalAlert
                       key={`${signal.stock_code}-${idx}`}
                       stockCode={signal.stock_code}
@@ -451,37 +452,36 @@ export default function Dashboard() {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-12 bg-[var(--card)] rounded-2xl border border-[var(--border)]">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[var(--secondary)] flex items-center justify-center">
-                    <span className="text-3xl">📭</span>
+                <div className="text-center py-10">
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+                    <span className="text-2xl">📭</span>
                   </div>
-                  <p className="text-[var(--muted)] font-medium">
-                    새로운 신호가 없습니다
-                  </p>
-                  <p className="text-sm text-[var(--muted)] mt-1">
-                    시장을 모니터링 중입니다
-                  </p>
+                  <p className="text-zinc-500 font-medium">새로운 신호 없음</p>
+                  <p className="text-sm text-zinc-400 mt-1">모니터링 중...</p>
                 </div>
               )}
             </div>
 
             {/* Positions */}
-            <div>
+            <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 p-5">
               <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h2 className="text-xl font-bold text-[var(--foreground)]">
-                    보유 포지션
-                  </h2>
-                  <p className="text-sm text-[var(--muted)]">
-                    실시간 손익 현황
-                  </p>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 flex items-center justify-center">
+                    <span className="text-white text-sm">💼</span>
+                  </div>
+                  <div>
+                    <h2 className="font-bold text-zinc-900 dark:text-white">
+                      보유 포지션
+                    </h2>
+                    <p className="text-xs text-zinc-400">실시간 손익</p>
+                  </div>
                 </div>
                 {openPositions.length > 0 && (
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                    className={`px-2.5 py-1 rounded-full text-xs font-bold ${
                       totalPnl >= 0
-                        ? "bg-emerald-500/10 text-emerald-500"
-                        : "bg-rose-500/10 text-rose-500"
+                        ? "bg-green-100 dark:bg-green-500/10 text-green-600 dark:text-green-400"
+                        : "bg-red-100 dark:bg-red-500/10 text-red-600 dark:text-red-400"
                     }`}
                   >
                     {totalPnl >= 0 ? "+" : ""}
@@ -491,28 +491,18 @@ export default function Dashboard() {
               </div>
 
               {openPositions.length > 0 ? (
-                <div className="space-y-4">
-                  {openPositions.map((position, idx) => (
-                    <div
-                      key={position.position_id}
-                      className="animate-slide-up"
-                      style={{ animationDelay: `${idx * 100}ms` }}
-                    >
-                      <PositionCard position={position} />
-                    </div>
+                <div className="space-y-3">
+                  {openPositions.map((position) => (
+                    <PositionCard key={position.position_id} position={position} />
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-12 bg-[var(--card)] rounded-2xl border border-[var(--border)]">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[var(--secondary)] flex items-center justify-center">
-                    <span className="text-3xl">📋</span>
+                <div className="text-center py-10">
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+                    <span className="text-2xl">📋</span>
                   </div>
-                  <p className="text-[var(--muted)] font-medium">
-                    보유 포지션이 없습니다
-                  </p>
-                  <p className="text-sm text-[var(--muted)] mt-1">
-                    신호를 확인하고 진입하세요
-                  </p>
+                  <p className="text-zinc-500 font-medium">포지션 없음</p>
+                  <p className="text-sm text-zinc-400 mt-1">신호 확인 후 진입</p>
                 </div>
               )}
             </div>
@@ -520,10 +510,10 @@ export default function Dashboard() {
         </div>
       </main>
 
-      {/* Order Success Toast */}
+      {/* Toast */}
       {orderSuccess && (
         <div className="fixed bottom-6 right-6 z-50 animate-slide-up">
-          <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-500/30">
+          <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-2xl shadow-green-500/30">
             <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -535,21 +525,24 @@ export default function Dashboard() {
       )}
 
       {/* Footer */}
-      <footer className="mt-12 py-6 border-t border-[var(--border)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="mt-12 py-8 border-t border-zinc-100 dark:border-zinc-800">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-[var(--muted)]">
-              © 2024 WeightedTrader. Smart Auto Trading System.
-            </p>
-            <div className="flex items-center gap-4">
-              <span className="text-xs text-[var(--muted)]">
-                Powered by AI
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-r from-[#833AB4] via-[#E1306C] to-[#F77737] p-[2px]">
+                <div className="w-full h-full rounded-[10px] bg-white dark:bg-zinc-950 flex items-center justify-center">
+                  <span className="text-sm">📈</span>
+                </div>
+              </div>
+              <span className="text-sm text-zinc-400">
+                WeightedTrader
               </span>
-              <div className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                <span className="text-xs text-[var(--muted)]">
-                  System Online
-                </span>
+            </div>
+            <div className="flex items-center gap-4 text-sm text-zinc-400">
+              <span>Powered by AI</span>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span>System Online</span>
               </div>
             </div>
           </div>

@@ -11,29 +11,24 @@ interface StatCardProps {
 
 const gradientConfig = {
   purple: {
-    bg: "from-indigo-500/10 to-purple-500/10",
-    icon: "from-indigo-500 to-purple-500",
-    border: "border-indigo-500/20",
+    border: "from-[#833AB4] via-[#E1306C] to-[#F77737]",
+    bg: "bg-purple-50 dark:bg-purple-500/5",
   },
   blue: {
-    bg: "from-blue-500/10 to-cyan-500/10",
-    icon: "from-blue-500 to-cyan-500",
-    border: "border-blue-500/20",
+    border: "from-blue-500 via-cyan-500 to-teal-500",
+    bg: "bg-blue-50 dark:bg-blue-500/5",
   },
   green: {
-    bg: "from-emerald-500/10 to-teal-500/10",
-    icon: "from-emerald-500 to-teal-500",
-    border: "border-emerald-500/20",
+    border: "from-emerald-500 via-green-500 to-teal-500",
+    bg: "bg-green-50 dark:bg-green-500/5",
   },
   orange: {
-    bg: "from-orange-500/10 to-amber-500/10",
-    icon: "from-orange-500 to-amber-500",
-    border: "border-orange-500/20",
+    border: "from-orange-500 via-amber-500 to-yellow-500",
+    bg: "bg-orange-50 dark:bg-orange-500/5",
   },
   pink: {
-    bg: "from-pink-500/10 to-rose-500/10",
-    icon: "from-pink-500 to-rose-500",
-    border: "border-pink-500/20",
+    border: "from-pink-500 via-rose-500 to-red-500",
+    bg: "bg-pink-50 dark:bg-pink-500/5",
   },
 };
 
@@ -48,93 +43,62 @@ export default function StatCard({
   const config = gradientConfig[gradient];
 
   return (
-    <div
-      className={`relative overflow-hidden bg-[var(--card)] rounded-2xl p-5 border ${config.border} card-hover`}
-    >
-      {/* Background gradient */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${config.bg} opacity-50`}
-      />
-
-      <div className="relative">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-3">
-          <p className="text-sm font-medium text-[var(--muted)]">{title}</p>
+    <div className="flex-shrink-0 w-44">
+      {/* Instagram Story-like ring */}
+      <div className={`p-[2px] rounded-3xl bg-gradient-to-r ${config.border}`}>
+        <div className={`${config.bg} bg-white dark:bg-zinc-900 rounded-[22px] p-4`}>
+          {/* Icon */}
           {icon && (
-            <div
-              className={`w-10 h-10 rounded-xl bg-gradient-to-br ${config.icon} flex items-center justify-center shadow-lg`}
-            >
-              <span className="text-lg">{icon}</span>
+            <div className="w-10 h-10 rounded-2xl bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center mb-3">
+              <span className="text-xl">{icon}</span>
+            </div>
+          )}
+
+          {/* Title */}
+          <p className="text-xs text-zinc-400 font-medium mb-1">{title}</p>
+
+          {/* Value */}
+          <p className="text-2xl font-bold text-zinc-900 dark:text-white tracking-tight">
+            {typeof value === "number" ? value.toLocaleString() : value}
+          </p>
+
+          {/* Sub value with trend */}
+          {subValue && (
+            <div className="flex items-center gap-1.5 mt-2">
+              {trend && trend !== "neutral" && (
+                <span
+                  className={`w-4 h-4 rounded-full flex items-center justify-center ${
+                    trend === "up"
+                      ? "bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400"
+                      : "bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400"
+                  }`}
+                >
+                  {trend === "up" ? (
+                    <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" />
+                    </svg>
+                  ) : (
+                    <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  )}
+                </span>
+              )}
+              <p
+                className={`text-xs font-medium ${
+                  trend === "up"
+                    ? "text-green-600 dark:text-green-400"
+                    : trend === "down"
+                    ? "text-red-600 dark:text-red-400"
+                    : "text-zinc-400"
+                }`}
+              >
+                {subValue}
+              </p>
             </div>
           )}
         </div>
-
-        {/* Value */}
-        <p className="text-3xl font-bold text-[var(--foreground)] tracking-tight">
-          {typeof value === "number" ? value.toLocaleString() : value}
-        </p>
-
-        {/* Sub value with trend */}
-        {subValue && (
-          <div className="flex items-center gap-2 mt-2">
-            {trend && trend !== "neutral" && (
-              <span
-                className={`inline-flex items-center justify-center w-5 h-5 rounded-full ${
-                  trend === "up"
-                    ? "bg-emerald-500/20 text-emerald-500"
-                    : "bg-rose-500/20 text-rose-500"
-                }`}
-              >
-                {trend === "up" ? (
-                  <svg
-                    className="w-3 h-3"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={3}
-                      d="M5 15l7-7 7 7"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    className="w-3 h-3"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={3}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                )}
-              </span>
-            )}
-            <p
-              className={`text-sm font-medium ${
-                trend === "up"
-                  ? "text-emerald-500"
-                  : trend === "down"
-                  ? "text-rose-500"
-                  : "text-[var(--muted)]"
-              }`}
-            >
-              {subValue}
-            </p>
-          </div>
-        )}
       </div>
-
-      {/* Decorative element */}
-      <div
-        className={`absolute -right-4 -bottom-4 w-24 h-24 rounded-full bg-gradient-to-br ${config.icon} opacity-10 blur-2xl`}
-      />
     </div>
   );
 }

@@ -83,85 +83,72 @@ export default function AutoTraderPanel({ onStatusChange }: AutoTraderPanelProps
   };
 
   const getStatusColor = () => {
-    if (!status) return "bg-slate-500";
+    if (!status) return "bg-zinc-400";
     switch (status.status) {
-      case "running":
-        return "bg-emerald-500";
-      case "waiting":
-        return "bg-amber-500";
-      case "paused":
-        return "bg-yellow-500";
-      case "closed":
-        return "bg-blue-500";
-      default:
-        return "bg-slate-500";
+      case "running": return "bg-green-500";
+      case "waiting": return "bg-amber-500";
+      case "paused": return "bg-yellow-500";
+      case "closed": return "bg-blue-500";
+      default: return "bg-zinc-400";
     }
   };
 
   const getStatusText = () => {
     if (!status) return "Loading...";
     switch (status.status) {
-      case "running":
-        return "Running";
-      case "waiting":
-        return "Waiting";
-      case "paused":
-        return "Paused";
-      case "closed":
-        return "Market Closed";
-      case "stopped":
-        return "Stopped";
-      default:
-        return status.status;
+      case "running": return "Running";
+      case "waiting": return "Waiting";
+      case "paused": return "Paused";
+      case "closed": return "Market Closed";
+      case "stopped": return "Stopped";
+      default: return status.status;
     }
   };
 
   return (
-    <div className="glass-card overflow-hidden">
+    <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800 overflow-hidden">
       {/* Header */}
-      <div className="p-5 border-b border-[var(--card-border)]">
+      <div className="p-5 border-b border-zinc-100 dark:border-zinc-800">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className={`w-3 h-3 rounded-full ${getStatusColor()} animate-pulse`} />
-            <h3 className="text-lg font-bold text-[var(--foreground)]">
-              Auto Trader
-            </h3>
+            <div className="w-10 h-10 rounded-full p-[2px] bg-gradient-to-r from-[#833AB4] via-[#E1306C] to-[#F77737]">
+              <div className="w-full h-full rounded-full bg-white dark:bg-zinc-900 flex items-center justify-center">
+                <span className="text-lg">🤖</span>
+              </div>
+            </div>
+            <div>
+              <h3 className="font-bold text-zinc-900 dark:text-white">
+                Auto Trader
+              </h3>
+              <div className="flex items-center gap-1.5">
+                <span className={`w-2 h-2 rounded-full ${getStatusColor()} animate-pulse`} />
+                <span className="text-xs text-zinc-400">{getStatusText()}</span>
+              </div>
+            </div>
           </div>
-          <span className="px-2 py-1 text-xs font-semibold rounded-lg bg-[var(--card-border)] text-muted">
-            {getStatusText()}
-          </span>
         </div>
       </div>
 
       {/* Stats */}
       {status && (
-        <div className="grid grid-cols-3 gap-px bg-[var(--card-border)]">
-          <div className="bg-[var(--card)] p-3 text-center">
-            <p className="text-[10px] text-muted uppercase tracking-wider">
-              Trades
-            </p>
-            <p className="text-lg font-bold text-[var(--foreground)] tabular-nums">
+        <div className="grid grid-cols-3 divide-x divide-zinc-100 dark:divide-zinc-800 bg-zinc-50 dark:bg-zinc-800/30">
+          <div className="p-3 text-center">
+            <p className="text-[10px] text-zinc-400 uppercase tracking-wider mb-0.5">Trades</p>
+            <p className="text-lg font-bold text-zinc-900 dark:text-white tabular-nums">
               {status.today_trades}
             </p>
           </div>
-          <div className="bg-[var(--card)] p-3 text-center">
-            <p className="text-[10px] text-muted uppercase tracking-wider">
-              P&L
-            </p>
-            <p
-              className={`text-lg font-bold tabular-nums ${
-                status.today_pnl >= 0 ? "text-emerald-400" : "text-rose-400"
-              }`}
-            >
-              {status.today_pnl >= 0 ? "+" : ""}
-              {status.today_pnl.toLocaleString()}
+          <div className="p-3 text-center">
+            <p className="text-[10px] text-zinc-400 uppercase tracking-wider mb-0.5">P&L</p>
+            <p className={`text-lg font-bold tabular-nums ${
+              status.today_pnl >= 0 ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
+            }`}>
+              {status.today_pnl >= 0 ? "+" : ""}{status.today_pnl.toLocaleString()}
             </p>
           </div>
-          <div className="bg-[var(--card)] p-3 text-center">
-            <p className="text-[10px] text-muted uppercase tracking-wider">
-              Watching
-            </p>
-            <p className="text-lg font-bold text-[var(--foreground)] tabular-nums">
+          <div className="p-3 text-center">
+            <p className="text-[10px] text-zinc-400 uppercase tracking-wider mb-0.5">Watching</p>
+            <p className="text-lg font-bold text-zinc-900 dark:text-white tabular-nums">
               {status.watched_stocks}
             </p>
           </div>
@@ -170,22 +157,20 @@ export default function AutoTraderPanel({ onStatusChange }: AutoTraderPanelProps
 
       {/* Position Summary */}
       {status?.positions && (
-        <div className="p-4 border-t border-[var(--card-border)]">
+        <div className="px-5 py-3 border-t border-zinc-100 dark:border-zinc-800">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-muted">Open Positions</span>
-            <span className="font-semibold text-[var(--foreground)]">
+            <span className="text-zinc-400">Open Positions</span>
+            <span className="font-semibold text-zinc-700 dark:text-zinc-300">
               {status.positions.open_positions} / {status.config?.max_positions || 5}
             </span>
           </div>
           <div className="flex items-center justify-between text-sm mt-2">
-            <span className="text-muted">Unrealized P&L</span>
-            <span
-              className={`font-semibold ${
-                status.positions.total_unrealized_pnl >= 0
-                  ? "text-emerald-400"
-                  : "text-rose-400"
-              }`}
-            >
+            <span className="text-zinc-400">Unrealized P&L</span>
+            <span className={`font-semibold ${
+              status.positions.total_unrealized_pnl >= 0
+                ? "text-green-600 dark:text-green-400"
+                : "text-red-600 dark:text-red-400"
+            }`}>
               {status.positions.total_unrealized_pnl >= 0 ? "+" : ""}
               {status.positions.total_unrealized_pnl.toLocaleString()}
             </span>
@@ -193,50 +178,34 @@ export default function AutoTraderPanel({ onStatusChange }: AutoTraderPanelProps
         </div>
       )}
 
-      {/* Error Message */}
+      {/* Error */}
       {error && (
-        <div className="px-4 py-2 bg-rose-500/10 border-t border-rose-500/20">
-          <p className="text-xs text-rose-400">{error}</p>
+        <div className="px-5 py-2 bg-red-50 dark:bg-red-500/10">
+          <p className="text-xs text-red-600 dark:text-red-400">{error}</p>
         </div>
       )}
 
       {/* Controls */}
-      <div className="p-4 border-t border-[var(--card-border)]">
+      <div className="p-4 border-t border-zinc-100 dark:border-zinc-800">
         <div className="grid grid-cols-2 gap-2">
           {!status?.is_running ? (
             <button
               onClick={handleStart}
               disabled={loading}
-              className="col-span-2 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="col-span-2 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#833AB4] via-[#E1306C] to-[#F77737] hover:opacity-90 transition-opacity disabled:opacity-50"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
                   <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24">
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      fill="none"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                    />
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
                   Starting...
                 </span>
               ) : (
                 <span className="flex items-center justify-center gap-2">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                      clipRule="evenodd"
-                    />
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                   </svg>
                   Start Auto Trading
                 </span>
@@ -248,128 +217,82 @@ export default function AutoTraderPanel({ onStatusChange }: AutoTraderPanelProps
                 <button
                   onClick={handleResume}
                   disabled={loading}
-                  className="py-3 rounded-xl font-bold text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 transition-all disabled:opacity-50"
+                  className="py-3 rounded-xl font-bold text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 transition-opacity disabled:opacity-50"
                 >
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Resume
-                  </span>
+                  Resume
                 </button>
               ) : (
                 <button
                   onClick={handlePause}
                   disabled={loading}
-                  className="py-3 rounded-xl font-bold text-white bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 transition-all disabled:opacity-50"
+                  className="py-3 rounded-xl font-bold text-white bg-gradient-to-r from-amber-500 to-yellow-500 hover:opacity-90 transition-opacity disabled:opacity-50"
                 >
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path
-                        fillRule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Pause
-                  </span>
+                  Pause
                 </button>
               )}
               <button
                 onClick={handleStop}
                 disabled={loading}
-                className="py-3 rounded-xl font-bold text-white bg-gradient-to-r from-rose-500 to-red-500 hover:from-rose-400 hover:to-red-400 transition-all disabled:opacity-50"
+                className="py-3 rounded-xl font-bold text-white bg-gradient-to-r from-rose-500 to-red-500 hover:opacity-90 transition-opacity disabled:opacity-50"
               >
-                <span className="flex items-center justify-center gap-2">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  Stop
-                </span>
+                Stop
               </button>
             </>
           )}
         </div>
 
-        {/* Quick Settings */}
+        {/* Toggle Switches */}
         {status && (
           <div className="mt-4 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted">Auto Buy</span>
-              <div
-                className={`w-10 h-5 rounded-full relative cursor-pointer transition-colors ${
-                  status.auto_buy_enabled ? "bg-emerald-500" : "bg-slate-600"
+              <span className="text-sm text-zinc-500">Auto Buy</span>
+              <button
+                className={`w-11 h-6 rounded-full relative transition-colors ${
+                  status.auto_buy_enabled ? "bg-green-500" : "bg-zinc-300 dark:bg-zinc-600"
                 }`}
                 onClick={async () => {
                   try {
-                    await autoTraderApi.updateConfig({
-                      auto_buy_enabled: !status.auto_buy_enabled,
-                    });
+                    await autoTraderApi.updateConfig({ auto_buy_enabled: !status.auto_buy_enabled });
                     await fetchStatus();
-                  } catch (err) {
-                    console.error(err);
-                  }
+                  } catch (err) { console.error(err); }
                 }}
               >
-                <div
-                  className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${
-                    status.auto_buy_enabled ? "translate-x-5" : "translate-x-0.5"
-                  }`}
-                />
-              </div>
+                <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform ${
+                  status.auto_buy_enabled ? "translate-x-[22px]" : "translate-x-0.5"
+                }`} />
+              </button>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted">Auto Sell</span>
-              <div
-                className={`w-10 h-5 rounded-full relative cursor-pointer transition-colors ${
-                  status.auto_sell_enabled ? "bg-emerald-500" : "bg-slate-600"
+              <span className="text-sm text-zinc-500">Auto Sell</span>
+              <button
+                className={`w-11 h-6 rounded-full relative transition-colors ${
+                  status.auto_sell_enabled ? "bg-green-500" : "bg-zinc-300 dark:bg-zinc-600"
                 }`}
                 onClick={async () => {
                   try {
-                    await autoTraderApi.updateConfig({
-                      auto_sell_enabled: !status.auto_sell_enabled,
-                    });
+                    await autoTraderApi.updateConfig({ auto_sell_enabled: !status.auto_sell_enabled });
                     await fetchStatus();
-                  } catch (err) {
-                    console.error(err);
-                  }
+                  } catch (err) { console.error(err); }
                 }}
               >
-                <div
-                  className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${
-                    status.auto_sell_enabled ? "translate-x-5" : "translate-x-0.5"
-                  }`}
-                />
-              </div>
+                <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform ${
+                  status.auto_sell_enabled ? "translate-x-[22px]" : "translate-x-0.5"
+                }`} />
+              </button>
             </div>
           </div>
         )}
       </div>
 
-      {/* Market Hours Indicator */}
-      <div className="px-4 py-3 bg-[var(--card-hover)] border-t border-[var(--card-border)]">
-        <div className="flex items-center gap-2 text-xs text-muted">
+      {/* Market Hours */}
+      <div className="px-4 py-3 bg-zinc-50 dark:bg-zinc-800/30 border-t border-zinc-100 dark:border-zinc-800">
+        <div className="flex items-center gap-2 text-xs text-zinc-400">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <span>
-            Market Hours: 09:00 - 15:30 KST
-          </span>
+          <span>09:00 - 15:30 KST</span>
           {status?.is_market_hours && (
-            <span className="ml-auto px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-semibold">
+            <span className="ml-auto px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400 font-bold">
               OPEN
             </span>
           )}

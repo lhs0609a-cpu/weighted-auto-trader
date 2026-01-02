@@ -1,14 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -19,7 +14,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0f",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+    { media: "(prefers-color-scheme: dark)", color: "#09090b" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
@@ -30,13 +28,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[var(--background)] text-[var(--foreground)]`}
-      >
-        <div className="min-h-screen bg-mesh bg-grid relative">
-          <div className="bg-noise">{children}</div>
-        </div>
+    <html lang="ko" suppressHydrationWarning>
+      <body className={`${inter.variable} font-sans antialiased`}>
+        {children}
       </body>
     </html>
   );

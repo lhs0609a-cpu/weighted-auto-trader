@@ -19,7 +19,15 @@
       "Bash(ping:*)",
       "Bash(curl:*)",
       "Bash(python -m json.tool:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx next build)",
+      "Bash(npm cache clean:*)",
+      "Bash(npm install)",
+      "Bash(node_modules/.bin/next build)",
+      "Bash(dir:*)",
+      "Bash(cmd /c \"node_modules\\\\.bin\\\\next build\")",
+      "Bash(node ./node_modules/next/dist/bin/next build:*)"
     ]
   }
 }
