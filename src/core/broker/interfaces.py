@@ -2,8 +2,8 @@
 브로커 클라이언트 인터페이스
 """
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional
-from dataclasses import dataclass
+from typing import Dict, List, Optional, Any
+from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 
@@ -33,6 +33,7 @@ class Quote:
     low: float
     prev_close: float
     timestamp: datetime
+    extra: Dict[str, Any] = field(default_factory=dict)  # 추가 정보 (PER, PBR 등)
 
 
 @dataclass
@@ -57,6 +58,7 @@ class OrderBook:
     total_ask_volume: int        # 총 매도 잔량
     total_bid_volume: int        # 총 매수 잔량
     timestamp: datetime
+    extra: Dict[str, Any] = field(default_factory=dict)  # 추가 정보 (예상체결가 등)
 
 
 @dataclass

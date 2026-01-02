@@ -4,26 +4,27 @@
 from typing import Optional
 from fastapi import APIRouter, HTTPException, Depends
 
-from ...core.broker import MockBrokerClient
+from ...core.broker import IBrokerClient, create_broker_from_settings
 from ...services import AnalysisService
 
 router = APIRouter(prefix="/stocks", tags=["종목"])
 
 # 의존성 주입을 위한 브로커 인스턴스
-_broker = None
+_broker: Optional[IBrokerClient] = None
 
 
-def get_broker():
+def get_broker() -> IBrokerClient:
+    """설정 기반 브로커 클라이언트 생성"""
     global _broker
     if _broker is None:
-        _broker = MockBrokerClient()
+        _broker = create_broker_from_settings()
     return _broker
 
 
 @router.get("")
 async def get_stocks(
     market: Optional[str] = None,
-    broker: MockBrokerClient = Depends(get_broker)
+    broker: IBrokerClient = Depends(get_broker)
 ):
     """종목 목록 조회"""
     await broker.connect()
@@ -40,7 +41,7 @@ async def get_stocks(
 @router.get("/{stock_code}")
 async def get_stock_detail(
     stock_code: str,
-    broker: MockBrokerClient = Depends(get_broker)
+    broker: IBrokerClient = Depends(get_broker)
 ):
     """종목 상세 조회"""
     await broker.connect()
@@ -71,7 +72,7 @@ async def get_stock_detail(
 async def get_stock_indicators(
     stock_code: str,
     period: str = "D",
-    broker: MockBrokerClient = Depends(get_broker)
+    broker: IBrokerClient = Depends(get_broker)
 ):
     """종목 지표 조회"""
     await broker.connect()
@@ -98,7 +99,7 @@ async def get_stock_ohlcv(
     stock_code: str,
     period: str = "D",
     count: int = 100,
-    broker: MockBrokerClient = Depends(get_broker)
+    broker: IBrokerClient = Depends(get_broker)
 ):
     """종목 OHLCV 조회"""
     await broker.connect()

@@ -239,3 +239,15 @@ BOLLINGER_STD_DEV = 2.0
 
 # 거래량 평균 계산 기간
 VOLUME_PERIOD = 20
+
+# 기본 지표 가중치
+DEFAULT_INDICATOR_WEIGHTS = {
+    "volume": 25,
+    "order_book": 20,
+    "vwap": 18,
+    "rsi": 12,
+    "macd": 10,
+    "ma": 8,
+    "bollinger": 5,
+    "obv": 2
+}

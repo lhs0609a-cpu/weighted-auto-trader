@@ -6,18 +6,19 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 
 from ...config.constants import TradingStyle
-from ...core.broker import MockBrokerClient
+from ...core.broker import IBrokerClient, create_broker_from_settings
 from ...services import AnalysisService, ScreeningService
 
 router = APIRouter(prefix="/signals", tags=["신호"])
 
-_broker = None
+_broker: Optional[IBrokerClient] = None
 
 
-def get_broker():
+def get_broker() -> IBrokerClient:
+    """설정 기반 브로커 클라이언트 생성"""
     global _broker
     if _broker is None:
-        _broker = MockBrokerClient()
+        _broker = create_broker_from_settings()
     return _broker
 
 
@@ -39,7 +40,7 @@ class ScreeningRequest(BaseModel):
 @router.post("/analyze")
 async def analyze_stock(
     request: AnalyzeRequest,
-    broker: MockBrokerClient = Depends(get_broker)
+    broker: IBrokerClient = Depends(get_broker)
 ):
     """종목 분석 요청"""
     await broker.connect()
@@ -72,7 +73,7 @@ async def analyze_stock(
 @router.post("/screening")
 async def screen_stocks(
     request: ScreeningRequest,
-    broker: MockBrokerClient = Depends(get_broker)
+    broker: IBrokerClient = Depends(get_broker)
 ):
     """종목 스크리닝"""
     await broker.connect()
@@ -107,7 +108,7 @@ async def screen_stocks(
 async def get_top_signals(
     trading_style: str,
     limit: int = 10,
-    broker: MockBrokerClient = Depends(get_broker)
+    broker: IBrokerClient = Depends(get_broker)
 ):
     """상위 신호 종목 조회"""
     await broker.connect()

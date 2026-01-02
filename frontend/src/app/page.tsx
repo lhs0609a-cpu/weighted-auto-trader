@@ -7,10 +7,13 @@ import {
   PositionCard,
   SignalAlert,
   StatCard,
+  TradePanel,
+  AutoTraderPanel,
 } from "@/components";
 import { useWebSocket } from "@/hooks/useWebSocket";
-import { stocksApi, portfolioApi } from "@/lib/api";
+import { stocksApi, portfolioApi, signalsApi, ordersApi } from "@/lib/api";
 import { Quote, Position, SignalType, WSMessage } from "@/types";
+import { OrderRequest } from "@/components/OrderModal";
 
 interface SignalData {
   stock_code: string;
@@ -26,6 +29,9 @@ export default function Dashboard() {
   const [positions, setPositions] = useState<Position[]>([]);
   const [signals, setSignals] = useState<SignalData[]>([]);
   const [tradingStyle, setTradingStyle] = useState("DAYTRADING");
+  const [selectedStock, setSelectedStock] = useState<Quote | null>(null);
+  const [selectedSignal, setSelectedSignal] = useState<SignalType | undefined>(undefined);
+  const [orderSuccess, setOrderSuccess] = useState<string | null>(null);
   const [balance, setBalance] = useState({
     total_asset: 10000000,
     available_cash: 5000000,
@@ -206,11 +212,23 @@ export default function Dashboard() {
     }
   };
 
-  useEffect(() => {
-    const init = async () => {
-      setLoading(true);
-      await Promise.all([loadStocks(), loadPositions(), loadBalance()]);
-      // Add demo signals
+  const loadSignals = async () => {
+    try {
+      const response = await signalsApi.getTopSignals(tradingStyle, 10);
+      if (response.success && response.data) {
+        const mappedSignals = response.data.map((s: any) => ({
+          stock_code: s.stock_code,
+          stock_name: s.stock_name,
+          signal: s.signal as SignalType,
+          score: s.total_score,
+          reasons: s.reasons || [],
+          timestamp: s.timestamp || new Date().toISOString(),
+        }));
+        setSignals(mappedSignals);
+      }
+    } catch (error) {
+      console.error("Failed to load signals:", error);
+      // Fallback demo signals
       setSignals([
         {
           stock_code: "005930",
@@ -237,10 +255,55 @@ export default function Dashboard() {
           timestamp: new Date(Date.now() - 300000).toISOString(),
         },
       ]);
+    }
+  };
+
+  useEffect(() => {
+    const init = async () => {
+      setLoading(true);
+      await Promise.all([loadStocks(), loadPositions(), loadBalance(), loadSignals()]);
       setLoading(false);
     };
     init();
   }, []);
+
+  // Reload signals when trading style changes
+  useEffect(() => {
+    if (!loading) {
+      loadSignals();
+    }
+  }, [tradingStyle]);
+
+  // Handle stock selection
+  const handleStockSelect = (stock: Quote) => {
+    setSelectedStock(stock);
+    // Find matching signal for this stock
+    const matchingSignal = signals.find(s => s.stock_code === stock.stock_code);
+    setSelectedSignal(matchingSignal?.signal);
+  };
+
+  // Handle order submission
+  const handleOrderSubmit = async (side: "BUY" | "SELL", order: OrderRequest) => {
+    try {
+      const response = side === "BUY"
+        ? await ordersApi.buy(order)
+        : await ordersApi.sell(order);
+
+      if (response.status === "FILLED" || response.status === "SUBMITTED") {
+        setOrderSuccess(`${side === "BUY" ? "매수" : "매도"} 주문이 ${response.status === "FILLED" ? "체결" : "접수"}되었습니다`);
+        // Reload positions and balance
+        loadPositions();
+        loadBalance();
+
+        // Clear success message after 3 seconds
+        setTimeout(() => setOrderSuccess(null), 3000);
+      } else {
+        throw new Error(response.message || "주문 처리 실패");
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
 
   const totalPnl = positions.reduce((sum, p) => sum + p.unrealized_pnl, 0);
   const openPositions = positions.filter((p) => p.status === "OPEN");
@@ -320,25 +383,38 @@ export default function Dashboard() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-              {stocks.map((stock, idx) => (
-                <div
-                  key={stock.stock_code}
-                  className="animate-slide-up"
-                  style={{ animationDelay: `${idx * 50}ms` }}
-                >
-                  <StockCard
-                    quote={stock}
-                    onClick={() =>
-                      console.log("Stock clicked:", stock.stock_code)
-                    }
-                  />
-                </div>
-              ))}
+              {stocks.map((stock, idx) => {
+                const stockSignal = signals.find(s => s.stock_code === stock.stock_code);
+                return (
+                  <div
+                    key={stock.stock_code}
+                    className={`animate-slide-up ${selectedStock?.stock_code === stock.stock_code ? 'ring-2 ring-violet-500 rounded-2xl' : ''}`}
+                    style={{ animationDelay: `${idx * 50}ms` }}
+                  >
+                    <StockCard
+                      quote={stock}
+                      signal={stockSignal?.signal}
+                      score={stockSignal?.score}
+                      onClick={() => handleStockSelect(stock)}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          {/* Right - Signals & Positions */}
+          {/* Right - Auto Trader, Trade Panel, Signals & Positions */}
           <div className="space-y-6">
+            {/* Auto Trader Panel */}
+            <AutoTraderPanel />
+
+            {/* Trade Panel */}
+            <TradePanel
+              quote={selectedStock}
+              signal={selectedSignal}
+              score={signals.find(s => s.stock_code === selectedStock?.stock_code)?.score}
+              onOrderSubmit={handleOrderSubmit}
+            />
             {/* Signals */}
             <div>
               <div className="flex items-center justify-between mb-4">
@@ -443,6 +519,20 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
+
+      {/* Order Success Toast */}
+      {orderSuccess && (
+        <div className="fixed bottom-6 right-6 z-50 animate-slide-up">
+          <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-500/30">
+            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span className="font-semibold">{orderSuccess}</span>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="mt-12 py-6 border-t border-[var(--border)]">

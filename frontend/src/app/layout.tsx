@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -13,8 +13,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WeightedAutoTrader",
-  description: "가중치 기반 자동매매 시스템",
+  title: "WeightedTrader | Smart Auto Trading",
+  description: "AI-Powered Weighted Auto Trading System",
+  keywords: ["trading", "auto trading", "stock", "AI", "algorithm"],
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0f",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -23,11 +30,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 dark:bg-gray-900`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[var(--background)] text-[var(--foreground)]`}
       >
-        {children}
+        <div className="min-h-screen bg-mesh bg-grid relative">
+          <div className="bg-noise">{children}</div>
+        </div>
       </body>
     </html>
   );

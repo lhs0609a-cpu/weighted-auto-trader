@@ -1,25 +1,27 @@
 """
 포트폴리오 API 라우트
 """
+from typing import Optional
 from fastapi import APIRouter, Depends
 
-from ...core.broker import MockBrokerClient
+from ...core.broker import IBrokerClient, create_broker_from_settings
 
 router = APIRouter(prefix="/portfolio", tags=["포트폴리오"])
 
-_broker = None
+_broker: Optional[IBrokerClient] = None
 
 
-def get_broker():
+def get_broker() -> IBrokerClient:
+    """설정 기반 브로커 클라이언트 생성"""
     global _broker
     if _broker is None:
-        _broker = MockBrokerClient()
+        _broker = create_broker_from_settings()
     return _broker
 
 
 @router.get("/summary")
 async def get_portfolio_summary(
-    broker: MockBrokerClient = Depends(get_broker)
+    broker: IBrokerClient = Depends(get_broker)
 ):
     """포트폴리오 요약"""
     await broker.connect()
@@ -57,7 +59,7 @@ async def get_portfolio_summary(
 
 @router.get("/positions")
 async def get_positions(
-    broker: MockBrokerClient = Depends(get_broker)
+    broker: IBrokerClient = Depends(get_broker)
 ):
     """보유 종목 조회"""
     await broker.connect()
@@ -86,7 +88,7 @@ async def get_positions(
 
 @router.get("/balance")
 async def get_balance(
-    broker: MockBrokerClient = Depends(get_broker)
+    broker: IBrokerClient = Depends(get_broker)
 ):
     """잔고 조회"""
     await broker.connect()

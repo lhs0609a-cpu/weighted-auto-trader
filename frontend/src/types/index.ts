@@ -109,3 +109,96 @@ export interface Statistics {
   max_profit: number;
   max_loss: number;
 }
+
+// 거래 내역
+export interface Trade {
+  trade_id: string;
+  stock_code: string;
+  stock_name: string;
+  side: "BUY" | "SELL";
+  quantity: number;
+  entry_price: number;
+  exit_price: number;
+  pnl: number;
+  pnl_rate: number;
+  commission: number;
+  exit_reason: string;
+  entry_time: string;
+  exit_time: string;
+}
+
+// 설정
+export interface Settings {
+  trading_style: TradingStyle;
+  auto_trade_enabled: boolean;
+  telegram_enabled: boolean;
+  telegram_bot_token?: string;
+  telegram_chat_id?: string;
+  max_positions: number;
+  max_position_size_pct: number;
+  stop_loss_pct: number;
+  take_profit1_pct: number;
+  take_profit2_pct: number;
+  trailing_stop_pct: number;
+  indicator_weights: Record<string, number>;
+}
+
+// 백테스트 설정
+export interface BacktestConfig {
+  stock_codes: string[];
+  start_date: string;
+  end_date: string;
+  initial_capital: number;
+  trading_style: TradingStyle;
+  commission_rate: number;
+  slippage_rate: number;
+  max_position_size: number;
+  max_positions: number;
+}
+
+// 백테스트 결과
+export interface BacktestResult {
+  config: BacktestConfig;
+  performance: {
+    final_equity: number;
+    total_return: number;
+    total_pnl: number;
+    max_drawdown: number;
+  };
+  trades: {
+    total_trades: number;
+    winning_trades: number;
+    losing_trades: number;
+    win_rate: number;
+    avg_win: number;
+    avg_loss: number;
+    profit_factor: number | string;
+  };
+  equity_curve: Array<{
+    timestamp: string;
+    equity: number;
+    cash: number;
+    position_count: number;
+  }>;
+  trade_history: Trade[];
+}
+
+// 차트 데이터
+export interface ChartData {
+  timestamp: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+}
+
+// 지표 데이터
+export interface IndicatorData {
+  name: string;
+  value: number;
+  signal: "bullish" | "bearish" | "neutral";
+  score: number;
+  weight: number;
+  description: string;
+}

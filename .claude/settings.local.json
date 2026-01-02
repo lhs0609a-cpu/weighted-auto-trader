@@ -10,7 +10,16 @@
       "Bash(where:*)",
       "Bash(vercel:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(gh issue create --repo anthropics/claude-code --title \"Rust panic: UTF-8 Korean character boundary error\" --body \"$\\(cat <<''EOF''\n## Bug Description\nClaude Code panics when processing Korean \\(Hangul\\) characters due to incorrect UTF-8 byte boundary handling.\n\n## Error Message\n```\nthread ''<unnamed>'' panicked at /rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb\\\\library\\\\core\\\\src\\\\str\\\\mod.rs:833:21:\nbyte index 2 is not a char boundary; it is inside ''가'' \\(bytes 0..3\\) of `가`\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n```\n\n## Environment\n- Platform: Windows \\(win32\\)\n- Working directory contains Korean characters in file paths or content\n\n## Steps to Reproduce\n1. Run Claude Code in a directory with Korean text in files or paths\n2. Execute any command that processes Korean characters\n3. Panic occurs when Rust code tries to slice a Korean character at byte index 2 \\(Korean ''가'' occupies bytes 0-3 in UTF-8\\)\n\n## Root Cause\nThe Rust code is attempting to slice a UTF-8 string at a non-character boundary. Korean characters like ''가'' are 3 bytes in UTF-8, but the code is trying to access byte index 2 which is in the middle of the character.\n\n## Expected Behavior\nClaude Code should properly handle multi-byte UTF-8 characters including Korean, Chinese, Japanese, and other non-ASCII scripts.\n\n## Workaround\nCurrently, users must avoid Korean characters in file paths and content, which is not practical for Korean-speaking users.\nEOF\n\\)\")",
+      "Bash(find:*)",
+      "Bash(python -m uvicorn:*)",
+      "Bash(pip install:*)",
+      "Bash(timeout /t 5 /nobreak)",
+      "Bash(ping:*)",
+      "Bash(curl:*)",
+      "Bash(python -m json.tool:*)",
+      "Bash(python:*)"
     ]
   }
 }

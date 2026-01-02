@@ -1,0 +1,3 @@
+"""
+WeightedAutoTrader Tests
+"""
