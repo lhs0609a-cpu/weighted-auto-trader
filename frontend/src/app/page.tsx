@@ -325,7 +325,7 @@ export default function Dashboard() {
 
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Stats - Instagram Story Style */}
-        <div className="flex gap-4 mb-8 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+        <div className="flex gap-4 mb-8 overflow-x-auto pb-2 -mx-4 px-4 no-scrollbar">
           <StatCard
             title="총 자산"
             value={`${(balance.total_asset / 10000).toFixed(0)}만`}
@@ -512,7 +512,7 @@ export default function Dashboard() {
 
       {/* Toast */}
       {orderSuccess && (
-        <div className="fixed bottom-6 right-6 z-50 animate-slide-up">
+        <div className="fixed bottom-6 right-6 z-50 animate-slideUp">
           <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-2xl shadow-green-500/30">
             <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
