@@ -147,18 +147,18 @@ export default function HistoryPage() {
   };
 
   return (
-    <div className="min-h-screen gradient-mesh">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       {/* Header */}
-      <header className="sticky top-0 z-50 glass-effect border-b border-[var(--border)]">
+      <header className="sticky top-0 z-50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border-b border-zinc-200 dark:border-zinc-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
               <Link
                 href="/"
-                className="p-2 rounded-xl hover:bg-[var(--secondary)] transition-colors"
+                className="p-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 <svg
-                  className="w-5 h-5 text-[var(--muted)]"
+                  className="w-5 h-5 text-zinc-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -172,10 +172,10 @@ export default function HistoryPage() {
                 </svg>
               </Link>
               <div>
-                <h1 className="text-xl font-bold text-[var(--foreground)]">
+                <h1 className="text-xl font-bold text-zinc-900 dark:text-white">
                   Trade History
                 </h1>
-                <p className="text-sm text-[var(--muted)]">
+                <p className="text-sm text-zinc-500">
                   View all your trading activity
                 </p>
               </div>
@@ -187,29 +187,29 @@ export default function HistoryPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Stats Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
-            <p className="text-sm text-[var(--muted)] mb-1">Total Trades</p>
-            <p className="text-3xl font-bold text-[var(--foreground)]">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800">
+            <p className="text-sm text-zinc-500 mb-1">Total Trades</p>
+            <p className="text-3xl font-bold text-zinc-900 dark:text-white">
               {stats.total_trades}
             </p>
-            <p className="text-xs text-[var(--muted)] mt-1">
+            <p className="text-xs text-zinc-500 mt-1">
               {stats.winning_trades}W / {stats.losing_trades}L
             </p>
           </div>
-          <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
-            <p className="text-sm text-[var(--muted)] mb-1">Win Rate</p>
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800">
+            <p className="text-sm text-zinc-500 mb-1">Win Rate</p>
             <p className="text-3xl font-bold text-emerald-500">
               {stats.win_rate}%
             </p>
-            <div className="mt-2 h-1.5 bg-[var(--secondary)] rounded-full">
+            <div className="mt-2 h-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-full">
               <div
                 className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"
                 style={{ width: `${stats.win_rate}%` }}
               />
             </div>
           </div>
-          <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
-            <p className="text-sm text-[var(--muted)] mb-1">Total P&L</p>
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800">
+            <p className="text-sm text-zinc-500 mb-1">Total P&L</p>
             <p
               className={`text-3xl font-bold ${
                 stats.total_pnl >= 0 ? "text-emerald-500" : "text-rose-500"
@@ -218,10 +218,10 @@ export default function HistoryPage() {
               {stats.total_pnl >= 0 ? "+" : ""}
               {stats.total_pnl.toLocaleString()}
             </p>
-            <p className="text-xs text-[var(--muted)] mt-1">KRW</p>
+            <p className="text-xs text-zinc-500 mt-1">KRW</p>
           </div>
-          <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
-            <p className="text-sm text-[var(--muted)] mb-1">Avg P&L</p>
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800">
+            <p className="text-sm text-zinc-500 mb-1">Avg P&L</p>
             <p
               className={`text-3xl font-bold ${
                 stats.avg_pnl >= 0 ? "text-emerald-500" : "text-rose-500"
@@ -230,7 +230,7 @@ export default function HistoryPage() {
               {stats.avg_pnl >= 0 ? "+" : ""}
               {stats.avg_pnl.toLocaleString()}
             </p>
-            <p className="text-xs text-[var(--muted)] mt-1">per trade</p>
+            <p className="text-xs text-zinc-500 mt-1">per trade</p>
           </div>
         </div>
 
@@ -244,7 +244,7 @@ export default function HistoryPage() {
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                   filter === f
                     ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white"
-                    : "bg-[var(--secondary)] text-[var(--muted)] hover:text-[var(--foreground)]"
+                    : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
                 }`}
               >
                 {f === "all" ? "All" : f === "win" ? "Wins" : "Losses"}
@@ -253,13 +253,13 @@ export default function HistoryPage() {
           </div>
 
           <div className="flex items-center gap-2 ml-auto">
-            <span className="text-sm text-[var(--muted)]">Sort by:</span>
+            <span className="text-sm text-zinc-500">Sort by:</span>
             <select
               value={sortBy}
               onChange={(e) =>
                 setSortBy(e.target.value as "date" | "pnl" | "pnl_rate")
               }
-              className="bg-[var(--secondary)] border border-[var(--border)] rounded-xl px-3 py-2 text-sm text-[var(--foreground)]"
+              className="bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl px-3 py-2 text-sm text-zinc-900 dark:text-white"
             >
               <option value="date">Date</option>
               <option value="pnl">P&L Amount</option>
@@ -275,7 +275,7 @@ export default function HistoryPage() {
             return (
               <div
                 key={trade.trade_id}
-                className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)] card-hover"
+                className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800 hover:scale-[1.01] transition-transform"
               >
                 <div className="flex items-center justify-between">
                   {/* Left - Stock Info */}
@@ -291,18 +291,18 @@ export default function HistoryPage() {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="font-bold text-[var(--foreground)]">
+                        <h3 className="font-bold text-zinc-900 dark:text-white">
                           {trade.stock_name}
                         </h3>
-                        <span className="text-xs text-[var(--muted)] font-mono">
+                        <span className="text-xs text-zinc-500 font-mono">
                           {trade.stock_code}
                         </span>
                       </div>
                       <div className="flex items-center gap-3 mt-1">
-                        <span className="text-sm text-[var(--muted)]">
+                        <span className="text-sm text-zinc-500">
                           {trade.quantity} shares
                         </span>
-                        <span className="text-sm text-[var(--muted)]">
+                        <span className="text-sm text-zinc-500">
                           {trade.entry_price.toLocaleString()} &rarr;{" "}
                           {trade.exit_price.toLocaleString()}
                         </span>
@@ -347,8 +347,8 @@ export default function HistoryPage() {
                 </div>
 
                 {/* Bottom - Time Info */}
-                <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border)]">
-                  <div className="flex items-center gap-4 text-xs text-[var(--muted)]">
+                <div className="flex items-center justify-between mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+                  <div className="flex items-center gap-4 text-xs text-zinc-500">
                     <span>
                       Entry:{" "}
                       {new Date(trade.entry_time).toLocaleString("ko-KR", {
@@ -368,7 +368,7 @@ export default function HistoryPage() {
                       })}
                     </span>
                   </div>
-                  <span className="text-xs text-[var(--muted)]">
+                  <span className="text-xs text-zinc-500">
                     Fee: {trade.commission.toLocaleString()} KRW
                   </span>
                 </div>
@@ -379,10 +379,10 @@ export default function HistoryPage() {
 
         {filteredTrades.length === 0 && (
           <div className="text-center py-12">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[var(--secondary)] flex items-center justify-center">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
               <span className="text-3xl">📋</span>
             </div>
-            <p className="text-[var(--muted)] font-medium">No trades found</p>
+            <p className="text-zinc-500 font-medium">No trades found</p>
           </div>
         )}
       </main>

@@ -279,7 +279,7 @@ export default function StockDetailPage({ params }: PageProps) {
       <div className="min-h-screen gradient-mesh flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 animate-pulse" />
-          <p className="mt-6 text-[var(--muted)] font-medium">Loading...</p>
+          <p className="mt-6 text-zinc-500 font-medium">Loading...</p>
         </div>
       </div>
     );
@@ -288,7 +288,7 @@ export default function StockDetailPage({ params }: PageProps) {
   if (!quote || !analysis) {
     return (
       <div className="min-h-screen gradient-mesh flex items-center justify-center">
-        <p className="text-[var(--muted)]">Stock not found</p>
+        <p className="text-zinc-500">Stock not found</p>
       </div>
     );
   }
@@ -299,16 +299,16 @@ export default function StockDetailPage({ params }: PageProps) {
   return (
     <div className="min-h-screen gradient-mesh">
       {/* Header */}
-      <header className="sticky top-0 z-50 glass-effect border-b border-[var(--border)]">
+      <header className="sticky top-0 z-50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border-b border-zinc-200 dark:border-zinc-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
               <Link
                 href="/"
-                className="p-2 rounded-xl hover:bg-[var(--secondary)] transition-colors"
+                className="p-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 <svg
-                  className="w-5 h-5 text-[var(--muted)]"
+                  className="w-5 h-5 text-zinc-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -323,14 +323,14 @@ export default function StockDetailPage({ params }: PageProps) {
               </Link>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-xl font-bold text-[var(--foreground)]">
+                  <h1 className="text-xl font-bold text-zinc-900 dark:text-white">
                     {quote.name}
                   </h1>
                   {isConnected && (
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="실시간 연결됨" />
                   )}
                 </div>
-                <p className="text-sm text-[var(--muted)] font-mono">
+                <p className="text-sm text-zinc-500 font-mono">
                   {quote.stock_code}
                 </p>
               </div>
@@ -349,12 +349,12 @@ export default function StockDetailPage({ params }: PageProps) {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Price Card */}
-        <div className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] mb-6">
+        <div className="bg-[white] dark:bg-[#18181b] rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800 mb-6">
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-4xl font-bold text-[var(--foreground)]">
+              <p className="text-4xl font-bold text-zinc-900 dark:text-white">
                 {quote.price.toLocaleString()}
-                <span className="text-lg font-normal text-[var(--muted)] ml-2">
+                <span className="text-lg font-normal text-zinc-500 ml-2">
                   KRW
                 </span>
               </p>
@@ -388,33 +388,33 @@ export default function StockDetailPage({ params }: PageProps) {
                   {analysis.total_score.toFixed(0)}
                 </span>
               </div>
-              <p className="text-xs text-[var(--muted)] mt-2">Total Score</p>
+              <p className="text-xs text-zinc-500 mt-2">Total Score</p>
             </div>
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-4 gap-4 mt-6 pt-6 border-t border-[var(--border)]">
+          <div className="grid grid-cols-4 gap-4 mt-6 pt-6 border-t border-zinc-200 dark:border-zinc-800">
             <div>
-              <p className="text-xs text-[var(--muted)]">시가</p>
-              <p className="font-semibold text-[var(--foreground)]">
+              <p className="text-xs text-zinc-500">시가</p>
+              <p className="font-semibold text-zinc-900 dark:text-white">
                 {quote.open.toLocaleString()}
               </p>
             </div>
             <div>
-              <p className="text-xs text-[var(--muted)]">고가</p>
+              <p className="text-xs text-zinc-500">고가</p>
               <p className="font-semibold text-rose-500">
                 {quote.high.toLocaleString()}
               </p>
             </div>
             <div>
-              <p className="text-xs text-[var(--muted)]">저가</p>
+              <p className="text-xs text-zinc-500">저가</p>
               <p className="font-semibold text-blue-500">
                 {quote.low.toLocaleString()}
               </p>
             </div>
             <div>
-              <p className="text-xs text-[var(--muted)]">거래량</p>
-              <p className="font-semibold text-[var(--foreground)]">
+              <p className="text-xs text-zinc-500">거래량</p>
+              <p className="font-semibold text-zinc-900 dark:text-white">
                 {(quote.volume / 1000000).toFixed(1)}M
               </p>
             </div>
@@ -430,7 +430,7 @@ export default function StockDetailPage({ params }: PageProps) {
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                 activeTab === tab
                   ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg"
-                  : "bg-[var(--secondary)] text-[var(--muted)] hover:text-[var(--foreground)]"
+                  : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500 hover:text-zinc-900 dark:text-white"
               }`}
             >
               {tab === "analysis" ? "분석" : tab === "chart" ? "차트" : "뉴스"}
@@ -442,14 +442,14 @@ export default function StockDetailPage({ params }: PageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Indicators */}
             <div className="lg:col-span-2 space-y-4">
-              <h2 className="text-lg font-bold text-[var(--foreground)]">
+              <h2 className="text-lg font-bold text-zinc-900 dark:text-white">
                 지표 분석
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {indicators.map((ind) => (
                   <div
                     key={ind.name}
-                    className="bg-[var(--card)] rounded-xl p-4 border border-[var(--border)]"
+                    className="bg-[white] dark:bg-[#18181b] rounded-xl p-4 border border-zinc-200 dark:border-zinc-800"
                   >
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
@@ -462,21 +462,21 @@ export default function StockDetailPage({ params }: PageProps) {
                               : "bg-amber-500"
                           }`}
                         />
-                        <span className="font-semibold text-[var(--foreground)]">
+                        <span className="font-semibold text-zinc-900 dark:text-white">
                           {ind.name}
                         </span>
                       </div>
-                      <span className="text-xs text-[var(--muted)]">
+                      <span className="text-xs text-zinc-500">
                         Weight: {ind.weight}%
                       </span>
                     </div>
 
                     <div className="flex items-end justify-between">
                       <div>
-                        <p className="text-2xl font-bold text-[var(--foreground)]">
+                        <p className="text-2xl font-bold text-zinc-900 dark:text-white">
                           {ind.score}
                         </p>
-                        <p className="text-xs text-[var(--muted)]">
+                        <p className="text-xs text-zinc-500">
                           {ind.description}
                         </p>
                       </div>
@@ -494,7 +494,7 @@ export default function StockDetailPage({ params }: PageProps) {
                     </div>
 
                     {/* Score bar */}
-                    <div className="mt-3 h-1.5 bg-[var(--secondary)] rounded-full overflow-hidden">
+                    <div className="mt-3 h-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full transition-all ${
                           ind.signal === "bullish"
@@ -513,18 +513,18 @@ export default function StockDetailPage({ params }: PageProps) {
 
             {/* Trade Params */}
             <div className="space-y-4">
-              <h2 className="text-lg font-bold text-[var(--foreground)]">
+              <h2 className="text-lg font-bold text-zinc-900 dark:text-white">
                 매매 파라미터
               </h2>
-              <div className="bg-[var(--card)] rounded-xl p-5 border border-[var(--border)] space-y-4">
-                <div className="flex items-center justify-between py-2 border-b border-[var(--border)]">
-                  <span className="text-[var(--muted)]">진입가</span>
-                  <span className="font-semibold text-[var(--foreground)]">
+              <div className="bg-[white] dark:bg-[#18181b] rounded-xl p-5 border border-zinc-200 dark:border-zinc-800 space-y-4">
+                <div className="flex items-center justify-between py-2 border-b border-zinc-200 dark:border-zinc-800">
+                  <span className="text-zinc-500">진입가</span>
+                  <span className="font-semibold text-zinc-900 dark:text-white">
                     {analysis.trade_params.entry_price?.toLocaleString()} KRW
                   </span>
                 </div>
-                <div className="flex items-center justify-between py-2 border-b border-[var(--border)]">
-                  <span className="text-[var(--muted)]">손절가</span>
+                <div className="flex items-center justify-between py-2 border-b border-zinc-200 dark:border-zinc-800">
+                  <span className="text-zinc-500">손절가</span>
                   <div className="text-right">
                     <span className="font-semibold text-rose-500">
                       {analysis.trade_params.stop_loss?.toLocaleString()} KRW
@@ -534,8 +534,8 @@ export default function StockDetailPage({ params }: PageProps) {
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between py-2 border-b border-[var(--border)]">
-                  <span className="text-[var(--muted)]">목표가 1</span>
+                <div className="flex items-center justify-between py-2 border-b border-zinc-200 dark:border-zinc-800">
+                  <span className="text-zinc-500">목표가 1</span>
                   <div className="text-right">
                     <span className="font-semibold text-emerald-500">
                       {analysis.trade_params.take_profit_1?.toLocaleString()} KRW
@@ -545,8 +545,8 @@ export default function StockDetailPage({ params }: PageProps) {
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between py-2 border-b border-[var(--border)]">
-                  <span className="text-[var(--muted)]">목표가 2</span>
+                <div className="flex items-center justify-between py-2 border-b border-zinc-200 dark:border-zinc-800">
+                  <span className="text-zinc-500">목표가 2</span>
                   <div className="text-right">
                     <span className="font-semibold text-emerald-500">
                       {analysis.trade_params.take_profit_2?.toLocaleString()} KRW
@@ -557,8 +557,8 @@ export default function StockDetailPage({ params }: PageProps) {
                   </div>
                 </div>
                 <div className="flex items-center justify-between py-2">
-                  <span className="text-[var(--muted)]">트레일링 스탑</span>
-                  <span className="font-semibold text-[var(--foreground)]">
+                  <span className="text-zinc-500">트레일링 스탑</span>
+                  <span className="font-semibold text-zinc-900 dark:text-white">
                     {analysis.trade_params.trailing_stop_pct}%
                   </span>
                 </div>
@@ -569,13 +569,13 @@ export default function StockDetailPage({ params }: PageProps) {
               </div>
 
               {/* Analysis Reasons */}
-              <div className="bg-[var(--card)] rounded-xl p-5 border border-[var(--border)]">
-                <h3 className="font-semibold text-[var(--foreground)] mb-3">
+              <div className="bg-[white] dark:bg-[#18181b] rounded-xl p-5 border border-zinc-200 dark:border-zinc-800">
+                <h3 className="font-semibold text-zinc-900 dark:text-white mb-3">
                   분석 요약
                 </h3>
                 <div className="space-y-2">
                   {analysis.reasons.map((reason, i) => (
-                    <p key={i} className="text-sm text-[var(--muted)]">
+                    <p key={i} className="text-sm text-zinc-500">
                       {reason}
                     </p>
                   ))}
@@ -586,10 +586,10 @@ export default function StockDetailPage({ params }: PageProps) {
         )}
 
         {activeTab === "chart" && (
-          <div className="bg-[var(--card)] rounded-xl p-6 border border-[var(--border)]">
+          <div className="bg-[white] dark:bg-[#18181b] rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
             {/* Chart Period Selector */}
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-[var(--foreground)]">가격 차트</h3>
+              <h3 className="font-semibold text-zinc-900 dark:text-white">가격 차트</h3>
               <div className="flex gap-2">
                 {(["D", "W", "M"] as const).map((period) => (
                   <button
@@ -598,7 +598,7 @@ export default function StockDetailPage({ params }: PageProps) {
                     className={`px-3 py-1 rounded-lg text-sm font-medium transition-all ${
                       chartPeriod === period
                         ? "bg-indigo-500 text-white"
-                        : "bg-[var(--secondary)] text-[var(--muted)] hover:text-[var(--foreground)]"
+                        : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500 hover:text-zinc-900 dark:text-white"
                     }`}
                   >
                     {period === "D" ? "일" : period === "W" ? "주" : "월"}
@@ -611,12 +611,12 @@ export default function StockDetailPage({ params }: PageProps) {
               <CandlestickChart data={chartData} height={450} showVolume={true} />
             ) : (
               <div className="h-[450px] flex items-center justify-center">
-                <p className="text-[var(--muted)]">차트 데이터를 불러오는 중...</p>
+                <p className="text-zinc-500">차트 데이터를 불러오는 중...</p>
               </div>
             )}
 
             {/* Chart Legend */}
-            <div className="flex items-center justify-center gap-6 mt-4 text-xs text-[var(--muted)]">
+            <div className="flex items-center justify-center gap-6 mt-4 text-xs text-zinc-500">
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 rounded bg-emerald-500" />
                 <span>상승</span>
@@ -635,19 +635,19 @@ export default function StockDetailPage({ params }: PageProps) {
 
         {activeTab === "news" && (
           <div className="space-y-4">
-            <h3 className="font-semibold text-[var(--foreground)]">관련 뉴스</h3>
+            <h3 className="font-semibold text-zinc-900 dark:text-white">관련 뉴스</h3>
             <div className="space-y-3">
               {news.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-[var(--card)] rounded-xl p-4 border border-[var(--border)] hover:border-indigo-500/50 transition-colors cursor-pointer"
+                  className="bg-[white] dark:bg-[#18181b] rounded-xl p-4 border border-zinc-200 dark:border-zinc-800 hover:border-indigo-500/50 transition-colors cursor-pointer"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <h4 className="font-medium text-[var(--foreground)] mb-2 line-clamp-2">
+                      <h4 className="font-medium text-zinc-900 dark:text-white mb-2 line-clamp-2">
                         {item.title}
                       </h4>
-                      <div className="flex items-center gap-3 text-xs text-[var(--muted)]">
+                      <div className="flex items-center gap-3 text-xs text-zinc-500">
                         <span>{item.source}</span>
                         <span>{item.time}</span>
                       </div>
@@ -669,10 +669,10 @@ export default function StockDetailPage({ params }: PageProps) {
             </div>
 
             {/* News Summary */}
-            <div className="bg-[var(--card)] rounded-xl p-5 border border-[var(--border)]">
-              <h4 className="font-semibold text-[var(--foreground)] mb-3">뉴스 감성 분석</h4>
+            <div className="bg-[white] dark:bg-[#18181b] rounded-xl p-5 border border-zinc-200 dark:border-zinc-800">
+              <h4 className="font-semibold text-zinc-900 dark:text-white mb-3">뉴스 감성 분석</h4>
               <div className="flex items-center gap-4">
-                <div className="flex-1 h-3 bg-[var(--secondary)] rounded-full overflow-hidden flex">
+                <div className="flex-1 h-3 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden flex">
                   <div
                     className="bg-emerald-500"
                     style={{ width: `${(news.filter((n) => n.sentiment === "positive").length / news.length) * 100}%` }}

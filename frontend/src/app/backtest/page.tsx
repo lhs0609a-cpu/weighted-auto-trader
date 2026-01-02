@@ -124,16 +124,16 @@ export default function BacktestPage() {
   return (
     <div className="min-h-screen gradient-mesh">
       {/* Header */}
-      <header className="sticky top-0 z-50 glass-effect border-b border-[var(--border)]">
+      <header className="sticky top-0 z-50 glass-effect border-b border-zinc-200 dark:border-zinc-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
               <Link
                 href="/"
-                className="p-2 rounded-xl hover:bg-[var(--secondary)] transition-colors"
+                className="p-2 rounded-xl hover:bg-zinc-100 dark:bg-zinc-800 transition-colors"
               >
                 <svg
-                  className="w-5 h-5 text-[var(--muted)]"
+                  className="w-5 h-5 text-zinc-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -147,10 +147,10 @@ export default function BacktestPage() {
                 </svg>
               </Link>
               <div>
-                <h1 className="text-xl font-bold text-[var(--foreground)]">
+                <h1 className="text-xl font-bold text-zinc-900 dark:text-white">
                   Backtest
                 </h1>
-                <p className="text-sm text-[var(--muted)]">
+                <p className="text-sm text-zinc-500">
                   Test your strategy with historical data
                 </p>
               </div>
@@ -163,14 +163,14 @@ export default function BacktestPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Config Panel */}
           <div className="space-y-6">
-            <div className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)]">
-              <h2 className="text-lg font-bold text-[var(--foreground)] mb-4">
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800">
+              <h2 className="text-lg font-bold text-zinc-900 dark:text-white mb-4">
                 Configuration
               </h2>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm text-[var(--muted)] mb-2">
+                  <label className="block text-sm text-zinc-500 mb-2">
                     Stock Codes
                   </label>
                   <input
@@ -186,13 +186,13 @@ export default function BacktestPage() {
                       }));
                     }}
                     placeholder="005930, 000660, 035420"
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] text-sm"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white text-sm"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm text-[var(--muted)] mb-2">
+                    <label className="block text-sm text-zinc-500 mb-2">
                       Start Date
                     </label>
                     <input
@@ -204,11 +204,11 @@ export default function BacktestPage() {
                           start_date: e.target.value,
                         }))
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] text-sm"
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white text-sm"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-[var(--muted)] mb-2">
+                    <label className="block text-sm text-zinc-500 mb-2">
                       End Date
                     </label>
                     <input
@@ -220,13 +220,13 @@ export default function BacktestPage() {
                           end_date: e.target.value,
                         }))
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] text-sm"
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white text-sm"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm text-[var(--muted)] mb-2">
+                  <label className="block text-sm text-zinc-500 mb-2">
                     Initial Capital (KRW)
                   </label>
                   <input
@@ -238,12 +238,12 @@ export default function BacktestPage() {
                         initial_capital: parseInt(e.target.value) || 10000000,
                       }))
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] text-sm"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white text-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm text-[var(--muted)] mb-2">
+                  <label className="block text-sm text-zinc-500 mb-2">
                     Trading Style
                   </label>
                   <select
@@ -254,7 +254,7 @@ export default function BacktestPage() {
                         trading_style: e.target.value as TradingStyle,
                       }))
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] text-sm"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white text-sm"
                   >
                     <option value="SCALPING">Scalping</option>
                     <option value="DAYTRADING">Day Trading</option>
@@ -264,7 +264,7 @@ export default function BacktestPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm text-[var(--muted)] mb-2">
+                    <label className="block text-sm text-zinc-500 mb-2">
                       Max Positions
                     </label>
                     <input
@@ -278,11 +278,11 @@ export default function BacktestPage() {
                       }
                       min={1}
                       max={20}
-                      className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] text-sm"
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white text-sm"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-[var(--muted)] mb-2">
+                    <label className="block text-sm text-zinc-500 mb-2">
                       Position Size (%)
                     </label>
                     <input
@@ -297,7 +297,7 @@ export default function BacktestPage() {
                       }
                       min={5}
                       max={50}
-                      className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)] text-sm"
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white text-sm"
                     />
                   </div>
                 </div>
@@ -312,11 +312,11 @@ export default function BacktestPage() {
 
                 {isRunning && (
                   <div className="mt-4">
-                    <div className="flex justify-between text-sm text-[var(--muted)] mb-2">
+                    <div className="flex justify-between text-sm text-zinc-500 mb-2">
                       <span>Progress</span>
                       <span>{progress}%</span>
                     </div>
-                    <div className="h-2 bg-[var(--secondary)] rounded-full overflow-hidden">
+                    <div className="h-2 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all"
                         style={{ width: `${progress}%` }}
@@ -334,16 +334,16 @@ export default function BacktestPage() {
               <>
                 {/* Performance Summary */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
-                    <p className="text-sm text-[var(--muted)] mb-1">
+                  <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800">
+                    <p className="text-sm text-zinc-500 mb-1">
                       Final Equity
                     </p>
-                    <p className="text-2xl font-bold text-[var(--foreground)]">
+                    <p className="text-2xl font-bold text-zinc-900 dark:text-white">
                       {(result.performance.final_equity / 10000).toFixed(0)}M
                     </p>
                   </div>
-                  <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
-                    <p className="text-sm text-[var(--muted)] mb-1">
+                  <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800">
+                    <p className="text-sm text-zinc-500 mb-1">
                       Total Return
                     </p>
                     <p
@@ -357,14 +357,14 @@ export default function BacktestPage() {
                       {result.performance.total_return.toFixed(1)}%
                     </p>
                   </div>
-                  <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
-                    <p className="text-sm text-[var(--muted)] mb-1">Win Rate</p>
-                    <p className="text-2xl font-bold text-[var(--foreground)]">
+                  <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800">
+                    <p className="text-sm text-zinc-500 mb-1">Win Rate</p>
+                    <p className="text-2xl font-bold text-zinc-900 dark:text-white">
                       {result.trades.win_rate.toFixed(1)}%
                     </p>
                   </div>
-                  <div className="bg-[var(--card)] rounded-2xl p-5 border border-[var(--border)]">
-                    <p className="text-sm text-[var(--muted)] mb-1">
+                  <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800">
+                    <p className="text-sm text-zinc-500 mb-1">
                       Max Drawdown
                     </p>
                     <p className="text-2xl font-bold text-rose-500">
@@ -374,8 +374,8 @@ export default function BacktestPage() {
                 </div>
 
                 {/* Equity Curve */}
-                <div className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)]">
-                  <h3 className="text-lg font-bold text-[var(--foreground)] mb-4">
+                <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800">
+                  <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-4">
                     Equity Curve
                   </h3>
                   <div className="h-64 flex items-end gap-[2px]">
@@ -404,28 +404,28 @@ export default function BacktestPage() {
                         );
                       })}
                   </div>
-                  <div className="flex justify-between text-xs text-[var(--muted)] mt-2">
+                  <div className="flex justify-between text-xs text-zinc-500 mt-2">
                     <span>{result.config.start_date}</span>
                     <span>{result.config.end_date}</span>
                   </div>
                 </div>
 
                 {/* Trade Stats */}
-                <div className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)]">
-                  <h3 className="text-lg font-bold text-[var(--foreground)] mb-4">
+                <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800">
+                  <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-4">
                     Trade Statistics
                   </h3>
                   <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
                     <div>
-                      <p className="text-sm text-[var(--muted)]">
+                      <p className="text-sm text-zinc-500">
                         Total Trades
                       </p>
-                      <p className="text-xl font-bold text-[var(--foreground)]">
+                      <p className="text-xl font-bold text-zinc-900 dark:text-white">
                         {result.trades.total_trades}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm text-[var(--muted)]">
+                      <p className="text-sm text-zinc-500">
                         Winning Trades
                       </p>
                       <p className="text-xl font-bold text-emerald-500">
@@ -433,7 +433,7 @@ export default function BacktestPage() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm text-[var(--muted)]">
+                      <p className="text-sm text-zinc-500">
                         Losing Trades
                       </p>
                       <p className="text-xl font-bold text-rose-500">
@@ -441,22 +441,22 @@ export default function BacktestPage() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm text-[var(--muted)]">Avg Win</p>
+                      <p className="text-sm text-zinc-500">Avg Win</p>
                       <p className="text-xl font-bold text-emerald-500">
                         +{result.trades.avg_win.toLocaleString()}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm text-[var(--muted)]">Avg Loss</p>
+                      <p className="text-sm text-zinc-500">Avg Loss</p>
                       <p className="text-xl font-bold text-rose-500">
                         {result.trades.avg_loss.toLocaleString()}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm text-[var(--muted)]">
+                      <p className="text-sm text-zinc-500">
                         Profit Factor
                       </p>
-                      <p className="text-xl font-bold text-[var(--foreground)]">
+                      <p className="text-xl font-bold text-zinc-900 dark:text-white">
                         {typeof result.trades.profit_factor === "number"
                           ? result.trades.profit_factor.toFixed(2)
                           : result.trades.profit_factor}
@@ -474,7 +474,7 @@ export default function BacktestPage() {
                         Losses: {result.trades.losing_trades}
                       </span>
                     </div>
-                    <div className="h-3 bg-[var(--secondary)] rounded-full overflow-hidden flex">
+                    <div className="h-3 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden flex">
                       <div
                         className="bg-gradient-to-r from-emerald-500 to-teal-500"
                         style={{ width: `${result.trades.win_rate}%` }}
@@ -488,15 +488,15 @@ export default function BacktestPage() {
                 </div>
               </>
             ) : (
-              <div className="bg-[var(--card)] rounded-2xl p-12 border border-[var(--border)] flex items-center justify-center h-full">
+              <div className="bg-white dark:bg-zinc-900 rounded-2xl p-12 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center h-full">
                 <div className="text-center">
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-[var(--secondary)] flex items-center justify-center">
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
                     <span className="text-4xl">📊</span>
                   </div>
-                  <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">
+                  <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">
                     Run a Backtest
                   </h3>
-                  <p className="text-[var(--muted)]">
+                  <p className="text-zinc-500">
                     Configure your settings and click "Run Backtest" to see
                     results
                   </p>

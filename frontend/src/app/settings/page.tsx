@@ -140,16 +140,16 @@ export default function SettingsPage() {
   return (
     <div className="min-h-screen gradient-mesh">
       {/* Header */}
-      <header className="sticky top-0 z-50 glass-effect border-b border-[var(--border)]">
+      <header className="sticky top-0 z-50 glass-effect border-b border-zinc-200 dark:border-zinc-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
               <Link
                 href="/"
-                className="p-2 rounded-xl hover:bg-[var(--secondary)] transition-colors"
+                className="p-2 rounded-xl hover:bg-zinc-100 dark:bg-zinc-800 transition-colors"
               >
                 <svg
-                  className="w-5 h-5 text-[var(--muted)]"
+                  className="w-5 h-5 text-zinc-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -163,10 +163,10 @@ export default function SettingsPage() {
                 </svg>
               </Link>
               <div>
-                <h1 className="text-xl font-bold text-[var(--foreground)]">
+                <h1 className="text-xl font-bold text-zinc-900 dark:text-white">
                   Settings
                 </h1>
-                <p className="text-sm text-[var(--muted)]">
+                <p className="text-sm text-zinc-500">
                   Configure your trading preferences
                 </p>
               </div>
@@ -197,7 +197,7 @@ export default function SettingsPage() {
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                 activeTab === tab
                   ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg"
-                  : "bg-[var(--secondary)] text-[var(--muted)] hover:text-[var(--foreground)]"
+                  : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500 hover:text-zinc-900 dark:text-white"
               }`}
             >
               {tab === "trading"
@@ -213,8 +213,8 @@ export default function SettingsPage() {
         {activeTab === "trading" && (
           <div className="space-y-6">
             {/* Trading Style */}
-            <div className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)]">
-              <h2 className="text-lg font-bold text-[var(--foreground)] mb-4">
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800">
+              <h2 className="text-lg font-bold text-zinc-900 dark:text-white mb-4">
                 Trading Style
               </h2>
               <div className="grid grid-cols-3 gap-4">
@@ -231,17 +231,17 @@ export default function SettingsPage() {
                       className={`p-4 rounded-xl border-2 transition-all ${
                         settings.trading_style === style
                           ? "border-indigo-500 bg-indigo-500/10"
-                          : "border-[var(--border)] hover:border-indigo-500/50"
+                          : "border-zinc-200 dark:border-zinc-800 hover:border-indigo-500/50"
                       }`}
                     >
-                      <p className="font-semibold text-[var(--foreground)]">
+                      <p className="font-semibold text-zinc-900 dark:text-white">
                         {style === "SCALPING"
                           ? "Scalping"
                           : style === "DAYTRADING"
                           ? "Day Trading"
                           : "Swing"}
                       </p>
-                      <p className="text-xs text-[var(--muted)] mt-1">
+                      <p className="text-xs text-zinc-500 mt-1">
                         {style === "SCALPING"
                           ? "Quick trades, small profits"
                           : style === "DAYTRADING"
@@ -255,13 +255,13 @@ export default function SettingsPage() {
             </div>
 
             {/* Auto Trade */}
-            <div className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)]">
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold text-[var(--foreground)]">
+                  <h2 className="text-lg font-bold text-zinc-900 dark:text-white">
                     Auto Trading
                   </h2>
-                  <p className="text-sm text-[var(--muted)]">
+                  <p className="text-sm text-zinc-500">
                     Automatically execute trades based on signals
                   </p>
                 </div>
@@ -275,7 +275,7 @@ export default function SettingsPage() {
                   className={`relative w-14 h-7 rounded-full transition-colors ${
                     settings.auto_trade_enabled
                       ? "bg-indigo-500"
-                      : "bg-[var(--secondary)]"
+                      : "bg-zinc-100 dark:bg-zinc-800"
                   }`}
                 >
                   <div
@@ -290,13 +290,13 @@ export default function SettingsPage() {
             </div>
 
             {/* Position Settings */}
-            <div className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)]">
-              <h2 className="text-lg font-bold text-[var(--foreground)] mb-4">
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800">
+              <h2 className="text-lg font-bold text-zinc-900 dark:text-white mb-4">
                 Position Settings
               </h2>
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm text-[var(--muted)] mb-2">
+                  <label className="block text-sm text-zinc-500 mb-2">
                     Max Positions
                   </label>
                   <input
@@ -310,11 +310,11 @@ export default function SettingsPage() {
                     }
                     min={1}
                     max={20}
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-[var(--muted)] mb-2">
+                  <label className="block text-sm text-zinc-500 mb-2">
                     Max Position Size (%)
                   </label>
                   <input
@@ -329,20 +329,20 @@ export default function SettingsPage() {
                     min={5}
                     max={50}
                     step={5}
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white"
                   />
                 </div>
               </div>
             </div>
 
             {/* Risk Settings */}
-            <div className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)]">
-              <h2 className="text-lg font-bold text-[var(--foreground)] mb-4">
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800">
+              <h2 className="text-lg font-bold text-zinc-900 dark:text-white mb-4">
                 Risk Management
               </h2>
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm text-[var(--muted)] mb-2">
+                  <label className="block text-sm text-zinc-500 mb-2">
                     Stop Loss (%)
                   </label>
                   <input
@@ -357,11 +357,11 @@ export default function SettingsPage() {
                     min={0.5}
                     max={10}
                     step={0.5}
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-[var(--muted)] mb-2">
+                  <label className="block text-sm text-zinc-500 mb-2">
                     Trailing Stop (%)
                   </label>
                   <input
@@ -376,11 +376,11 @@ export default function SettingsPage() {
                     min={0.5}
                     max={5}
                     step={0.5}
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-[var(--muted)] mb-2">
+                  <label className="block text-sm text-zinc-500 mb-2">
                     Take Profit 1 (%)
                   </label>
                   <input
@@ -395,11 +395,11 @@ export default function SettingsPage() {
                     min={1}
                     max={20}
                     step={0.5}
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-[var(--muted)] mb-2">
+                  <label className="block text-sm text-zinc-500 mb-2">
                     Take Profit 2 (%)
                   </label>
                   <input
@@ -414,7 +414,7 @@ export default function SettingsPage() {
                     min={2}
                     max={30}
                     step={0.5}
-                    className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white"
                   />
                 </div>
               </div>
@@ -425,13 +425,13 @@ export default function SettingsPage() {
         {/* Notification Settings */}
         {activeTab === "notifications" && (
           <div className="space-y-6">
-            <div className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)]">
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h2 className="text-lg font-bold text-[var(--foreground)]">
+                  <h2 className="text-lg font-bold text-zinc-900 dark:text-white">
                     Telegram Notifications
                   </h2>
-                  <p className="text-sm text-[var(--muted)]">
+                  <p className="text-sm text-zinc-500">
                     Receive alerts via Telegram bot
                   </p>
                 </div>
@@ -445,7 +445,7 @@ export default function SettingsPage() {
                   className={`relative w-14 h-7 rounded-full transition-colors ${
                     settings.telegram_enabled
                       ? "bg-indigo-500"
-                      : "bg-[var(--secondary)]"
+                      : "bg-zinc-100 dark:bg-zinc-800"
                   }`}
                 >
                   <div
@@ -461,7 +461,7 @@ export default function SettingsPage() {
               {settings.telegram_enabled && (
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm text-[var(--muted)] mb-2">
+                    <label className="block text-sm text-zinc-500 mb-2">
                       Bot Token
                     </label>
                     <input
@@ -474,11 +474,11 @@ export default function SettingsPage() {
                         }))
                       }
                       placeholder="Enter your Telegram bot token"
-                      className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]"
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-[var(--muted)] mb-2">
+                    <label className="block text-sm text-zinc-500 mb-2">
                       Chat ID
                     </label>
                     <input
@@ -491,12 +491,12 @@ export default function SettingsPage() {
                         }))
                       }
                       placeholder="Enter your chat ID"
-                      className="w-full px-4 py-3 rounded-xl bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]"
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white"
                     />
                   </div>
                   <button
                     onClick={handleTestTelegram}
-                    className="px-4 py-2 rounded-xl bg-[var(--secondary)] text-[var(--foreground)] text-sm font-medium hover:bg-[var(--border)] transition-colors"
+                    className="px-4 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white text-sm font-medium hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
                   >
                     Send Test Message
                   </button>
@@ -509,13 +509,13 @@ export default function SettingsPage() {
         {/* Indicator Weights */}
         {activeTab === "weights" && (
           <div className="space-y-6">
-            <div className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)]">
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h2 className="text-lg font-bold text-[var(--foreground)]">
+                  <h2 className="text-lg font-bold text-zinc-900 dark:text-white">
                     Indicator Weights
                   </h2>
-                  <p className="text-sm text-[var(--muted)]">
+                  <p className="text-sm text-zinc-500">
                     Adjust the importance of each indicator
                   </p>
                 </div>
@@ -536,14 +536,14 @@ export default function SettingsPage() {
                     <div key={key}>
                       <div className="flex items-center justify-between mb-2">
                         <div>
-                          <span className="font-medium text-[var(--foreground)]">
+                          <span className="font-medium text-zinc-900 dark:text-white">
                             {indicatorInfo[key]?.name || key}
                           </span>
-                          <p className="text-xs text-[var(--muted)]">
+                          <p className="text-xs text-zinc-500">
                             {indicatorInfo[key]?.description}
                           </p>
                         </div>
-                        <span className="font-semibold text-[var(--foreground)]">
+                        <span className="font-semibold text-zinc-900 dark:text-white">
                           {value}%
                         </span>
                       </div>
@@ -555,7 +555,7 @@ export default function SettingsPage() {
                         onChange={(e) =>
                           updateWeight(key, parseInt(e.target.value))
                         }
-                        className="w-full h-2 bg-[var(--secondary)] rounded-full appearance-none cursor-pointer accent-indigo-500"
+                        className="w-full h-2 bg-zinc-100 dark:bg-zinc-800 rounded-full appearance-none cursor-pointer accent-indigo-500"
                       />
                     </div>
                   )

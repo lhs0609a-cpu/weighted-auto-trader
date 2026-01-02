@@ -33,9 +33,8 @@ export function CandlestickChart({ data, height = 400, showVolume = true }: Char
     const volumeHeight = showVolume ? height * 0.25 : 0;
     const padding = { top: 20, right: 60, bottom: 30, left: 10 };
 
-    // Clear canvas
-    ctx.fillStyle = "var(--card)";
-    ctx.fillRect(0, 0, width, height);
+    // Clear canvas - using transparent
+    ctx.clearRect(0, 0, width, height);
 
     // Calculate price range
     const prices = data.flatMap(d => [d.high, d.low]);
@@ -156,26 +155,26 @@ export function CandlestickChart({ data, height = 400, showVolume = true }: Char
       />
       {hoveredCandle && (
         <div
-          className="absolute bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 shadow-lg pointer-events-none z-10"
+          className="absolute bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-3 shadow-lg pointer-events-none z-10"
           style={{
             left: Math.min(mousePos.x + 10, (canvasRef.current?.clientWidth || 300) - 150),
             top: mousePos.y + 10,
           }}
         >
-          <p className="text-xs text-[var(--muted)]">
+          <p className="text-xs text-zinc-500">
             {new Date(hoveredCandle.timestamp).toLocaleDateString("ko-KR")}
           </p>
           <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-1 text-xs">
-            <span className="text-[var(--muted)]">시가</span>
-            <span className="text-[var(--foreground)] text-right">{hoveredCandle.open.toLocaleString()}</span>
-            <span className="text-[var(--muted)]">고가</span>
+            <span className="text-zinc-500">시가</span>
+            <span className="text-zinc-900 dark:text-white text-right">{hoveredCandle.open.toLocaleString()}</span>
+            <span className="text-zinc-500">고가</span>
             <span className="text-rose-500 text-right">{hoveredCandle.high.toLocaleString()}</span>
-            <span className="text-[var(--muted)]">저가</span>
+            <span className="text-zinc-500">저가</span>
             <span className="text-blue-500 text-right">{hoveredCandle.low.toLocaleString()}</span>
-            <span className="text-[var(--muted)]">종가</span>
-            <span className="text-[var(--foreground)] text-right">{hoveredCandle.close.toLocaleString()}</span>
-            <span className="text-[var(--muted)]">거래량</span>
-            <span className="text-[var(--foreground)] text-right">{(hoveredCandle.volume / 1000).toFixed(0)}K</span>
+            <span className="text-zinc-500">종가</span>
+            <span className="text-zinc-900 dark:text-white text-right">{hoveredCandle.close.toLocaleString()}</span>
+            <span className="text-zinc-500">거래량</span>
+            <span className="text-zinc-900 dark:text-white text-right">{(hoveredCandle.volume / 1000).toFixed(0)}K</span>
           </div>
         </div>
       )}
